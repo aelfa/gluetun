@@ -112307,7 +112307,7 @@
   },
   "wevpn": {
     "version": 1,
-    "timestamp": 1630019146,
+    "timestamp": 1630935729,
     "servers": [
       {
         "city": "Amsterdam",
@@ -112414,7 +112414,6 @@
         "tcp": false,
         "udp": false,
         "ips": [
-          "69.39.239.57",
           "69.39.239.72"
         ]
       },
@@ -112433,7 +112432,17 @@
         "tcp": false,
         "udp": false,
         "ips": [
-          "170.130.31.114"
+          "170.130.31.114",
+          "194.110.112.74"
+        ]
+      },
+      {
+        "city": "Denizli",
+        "hostname": "bursa.wevpn.com",
+        "tcp": false,
+        "udp": false,
+        "ips": [
+          "95.173.161.240"
         ]
       },
       {
@@ -112518,6 +112527,15 @@
         ]
       },
       {
+        "city": "Kiev",
+        "hostname": "kyiv.wevpn.com",
+        "tcp": false,
+        "udp": false,
+        "ips": [
+          "37.19.218.197"
+        ]
+      },
+      {
         "city": "Lagos",
         "hostname": "lagos.wevpn.com",
         "tcp": false,
@@ -112560,7 +112578,7 @@
         "tcp": false,
         "udp": false,
         "ips": [
-          "66.55.92.101"
+          "45.152.182.82"
         ]
       },
       {
@@ -112632,7 +112650,7 @@
         "tcp": false,
         "udp": false,
         "ips": [
-          "86.106.87.34"
+          "96.47.224.2"
         ]
       },
       {
@@ -112677,7 +112695,7 @@
         "tcp": false,
         "udp": false,
         "ips": [
-          "217.138.206.106"
+          "89.40.206.146"
         ]
       },
       {
@@ -112780,6 +112798,15 @@
         ]
       },
       {
+        "city": "Sibu",
+        "hostname": "kualalumpur.wevpn.com",
+        "tcp": false,
+        "udp": false,
+        "ips": [
+          "223.25.246.4"
+        ]
+      },
+      {
         "city": "Singapore",
         "hostname": "singapore.wevpn.com",
         "tcp": false,
@@ -112795,6 +112822,15 @@
         "udp": false,
         "ips": [
           "217.138.221.42"
+        ]
+      },
+      {
+        "city": "St Petersburg",
+        "hostname": "petersburg.wevpn.com",
+        "tcp": false,
+        "udp": false,
+        "ips": [
+          "82.202.220.242"
         ]
       },
       {
