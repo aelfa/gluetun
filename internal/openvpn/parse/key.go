@@ -12,3 +12,12 @@ func ExtractPrivateKey(b []byte) (keyData string, err error) {
 
 	return keyData, nil
 }
+
+func ExtractPrivateKeyFromConfig(config []byte) (keyData string, err error) {
+	block, err := extractBlock(config, "key")
+	if err != nil {
+		return "", fmt.Errorf("%w: %s", ErrExtractBlock, err)
+	}
+
+	return ExtractPrivateKey(block)
+}

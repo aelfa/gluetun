@@ -20,12 +20,23 @@ type Connection struct {
 	// PubKey is the public key of the VPN server,
 	// used only for Wireguard.
 	PubKey string `json:"pubkey"`
+	// OpenVPNCert is the OpenVPN cert which is city specific
+	// for Perfect Privacy.
+	OpenVPNCert string `json:"openvpn_cert,omitempty"`
+	// OpenVPNKey is the OpenVPN key which is city specific
+	// for Perfect Privacy.
+	OpenVPNKey string `json:"openvpn_key,omitempty"`
+	// OpenVPNTLSAuth is the OpenVPN tls auth which is city specific
+	// for Perfect Privacy.
+	OpenVPNTLSAuth string `json:"openvpn_tlsauth,omitempty"`
 }
 
 func (c *Connection) Equal(other Connection) bool {
 	return c.IP.Equal(other.IP) && c.Port == other.Port &&
 		c.Protocol == other.Protocol && c.Hostname == other.Hostname &&
-		c.PubKey == other.PubKey
+		c.PubKey == other.PubKey && c.OpenVPNCert == other.OpenVPNCert &&
+		c.OpenVPNKey == other.OpenVPNKey &&
+		c.OpenVPNTLSAuth == other.OpenVPNTLSAuth
 }
 
 func (c Connection) OpenVPNRemoteLine() (line string) {

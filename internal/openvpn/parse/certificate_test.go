@@ -48,6 +48,46 @@ func Test_ExtractCert(t *testing.T) {
 	}
 }
 
+func Test_ExtractCertFromConfig(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		config   []byte
+		certData string
+		err      error
+	}{
+		"bad config": {
+			err: errors.New("cannot extract relevant block: start string not found: <cert>"),
+		},
+		"bad cert": {
+			config: []byte("<cert>bad</cert>"),
+			err:    errors.New("cannot extract PEM data: cannot decode PEM encoded block"),
+		},
+		"valid cert": {
+			config:   []byte("<cert>" + validCertPEM + "</cert>"),
+			certData: validCertData,
+		},
+	}
+
+	for name, testCase := range testCases {
+		testCase := testCase
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			certData, err := ExtractCertFromConfig(testCase.config)
+
+			if testCase.err != nil {
+				require.Error(t, err)
+				assert.Equal(t, testCase.err.Error(), err.Error())
+			} else {
+				assert.NoError(t, err)
+			}
+
+			assert.Equal(t, testCase.certData, certData)
+		})
+	}
+}
+
 const validCertPEM = `
 -----BEGIN CERTIFICATE-----
 MIIGrDCCBJSgAwIBAgIEAdTnfTANBgkqhkiG9w0BAQsFADB7MQswCQYDVQQGEwJS

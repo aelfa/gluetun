@@ -72,6 +72,16 @@ type NordvpnServer struct { //nolint:maligned
 	UDP      bool   `json:"udp"`
 }
 
+type PerfectprivacyServer struct {
+	City           string   `json:"city"` // primary key
+	IPs            []net.IP `json:"ips"`
+	TCP            bool     `json:"tcp"`
+	UDP            bool     `json:"udp"`
+	OpenVPNCert    string   `json:"openvpn_cert"`
+	OpenVPNKey     string   `json:"openvpn_key"`
+	OpenVPNTLSAuth string   `json:"openvpn_tlsauth"`
+}
+
 type PrivadoServer struct {
 	Country  string `json:"country"`
 	Region   string `json:"region"`

@@ -48,6 +48,46 @@ func Test_ExtractPrivateKey(t *testing.T) {
 	}
 }
 
+func Test_ExtractPrivateKeyFromConfig(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		config  []byte
+		keyData string
+		err     error
+	}{
+		"bad config": {
+			err: errors.New("cannot extract relevant block: start string not found: <key>"),
+		},
+		"bad private key": {
+			config: []byte("<key>bad</key>"),
+			err:    errors.New("cannot extract PEM data: cannot decode PEM encoded block"),
+		},
+		"valid key": {
+			config:  []byte("<key>" + validPrivateKeyPEM + "</key>"),
+			keyData: validPrivateKeyData,
+		},
+	}
+
+	for name, testCase := range testCases {
+		testCase := testCase
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			keyData, err := ExtractPrivateKeyFromConfig(testCase.config)
+
+			if testCase.err != nil {
+				require.Error(t, err)
+				assert.Equal(t, testCase.err.Error(), err.Error())
+			} else {
+				assert.NoError(t, err)
+			}
+
+			assert.Equal(t, testCase.keyData, keyData)
+		})
+	}
+}
+
 const validPrivateKeyPEM = `
 -----BEGIN PRIVATE KEY-----
 MIIJQwIBADANBgkqhkiG9w0BAQEFAASCCS0wggkpAgEAAoICAQCrQDrezCptkWxX
