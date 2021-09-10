@@ -37,7 +37,6 @@ func (p *Perfectprivacy) BuildConf(connection models.Connection,
 		"ping-restart 120",
 		"route-delay 2",
 		"route-method exe",
-		"redirect-gateway def1",
 		"hand-window 120",
 		"inactive 604800",
 		"tls-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-RSA-WITH-AES-256-CBC-SHA", //nolint:lll
