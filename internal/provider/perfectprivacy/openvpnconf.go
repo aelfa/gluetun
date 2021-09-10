@@ -12,7 +12,7 @@ import (
 func (p *Perfectprivacy) BuildConf(connection models.Connection,
 	settings configuration.OpenVPN) (lines []string) {
 	if settings.Cipher == "" {
-		settings.Cipher = constants.AES256gcm
+		settings.Cipher = constants.AES256cbc
 	}
 
 	if settings.Auth == "" {
