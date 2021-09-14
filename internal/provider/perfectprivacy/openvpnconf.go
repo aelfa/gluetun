@@ -19,28 +19,30 @@ func (p *Perfectprivacy) BuildConf(connection models.Connection,
 		settings.Auth = constants.SHA512
 	}
 
+	if settings.MSSFix == 0 {
+		settings.MSSFix = 1450
+	}
+
 	lines = []string{
 		"client",
-		"dev " + settings.Interface,
 		"nobind",
-		"persist-key",
-		"remote-cert-tls server",
-		"ping-timer-rem",
 		"tls-exit",
+		"dev " + settings.Interface,
+		"verb " + strconv.Itoa(settings.Verbosity),
 
 		// Perfect Privacy specific
-		"tun-mtu 1500",
-		"reneg-sec 3600",
-		"comp-lzo",
-		"key-direction 1",
 		"ping 5",
-		"ping-restart 120",
-		"route-delay 2",
-		"route-method exe",
-		"hand-window 120",
-		"inactive 604800",
+		"tun-mtu 1500",
+		"mssfix " + strconv.Itoa(int(settings.MSSFix)),
+		"remote-cert-tls server",
+		"reneg-sec 3600",
+		"key-direction 1",
 		"tls-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-RSA-WITH-AES-256-CBC-SHA", //nolint:lll
+		"hand-window 120",
 		"tls-timeout 5",
+		"auth-user-pass " + constants.OpenVPNAuthConf,
+		"auth " + settings.Auth,
+		// "route-delay 2",
 
 		// Added constant values
 		"auth-nocache",
@@ -50,24 +52,20 @@ func (p *Perfectprivacy) BuildConf(connection models.Connection,
 		"suppress-timestamps",
 
 		// Modified variables
-		"verb " + strconv.Itoa(settings.Verbosity),
-		"auth-user-pass " + constants.OpenVPNAuthConf,
 		connection.OpenVPNProtoLine(),
 		connection.OpenVPNRemoteLine(),
-		"auth " + settings.Auth,
 	}
 
 	lines = append(lines, utils.CipherLines(settings.Cipher, settings.Version)...)
 
-	if settings.MSSFix > 0 {
-		mssFixLine := "mssfix " + strconv.Itoa(int(settings.MSSFix))
-		lines = append(lines, mssFixLine)
-	} else if connection.Protocol == constants.UDP {
-		lines = append(lines, "mssfix") // perfect privacy specific
+	if connection.Protocol == constants.UDP {
+		lines = append(lines, "explicit-exit-notify")
 	}
 
 	if !settings.Root {
 		lines = append(lines, "user "+settings.ProcUser)
+		lines = append(lines, "persist-tun")
+		lines = append(lines, "persist-key")
 	}
 
 	if settings.IPv6 {
